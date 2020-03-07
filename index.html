@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.5/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.5/addons/p5.dom.js"></script>
+    <script src="https://idmnyu.github.io/p5.js-speech/lib/p5.speech.js"></script>
+</head>
+
+<body>
+
+    <div>
+        <button id="search">Search</button>
+    </div>
+
+    <div>
+        <button id="bg">Change background</button>
+    </div>
+
+    <div>
+        <img src="dog.jpg" id="dog" width="120" height="120">
+    </div>
+
+
+    <script>
+        rec = new p5.SpeechRec();
+
+        document.getElementById('dog').addEventListener('click', () => {
+            rec.start();
+            rec.onResult = () => {
+                if (rec.resultValue) {
+
+                    let w = document.getElementById('dog').width;
+                    let h = document.getElementById('dog').height;
+
+                    if (rec.resultString == 'big') {
+                        document.getElementById('dog').width = w + 260;
+                        document.getElementById('dog').height = h + 260;
+
+                    } else if (rec.resultString == 'small') {
+                        document.getElementById('dog').width = w - 260;
+                        document.getElementById('dog').height = h - 260;
+                    }
+
+
+
+                }
+            }
+        });
+
+
+
+
+        document.getElementById('search').addEventListener('click', () => {
+            rec.start();
+            rec.onResult = () => {
+                if (rec.resultValue) {
+                    window.open('https://www.google.com/search?q=' + rec.resultString);
+                }
+            }
+        });
+
+
+
+        document.getElementById('bg').addEventListener('click', () => {
+            rec.start();
+            rec.onResult = () => {
+                if (rec.resultValue) {
+                    console.log(rec.resultString)
+                    document.bgColor = rec.resultString;
+                }
+            }
+        });
+    </script>
+
+</body>
+
+</html>
